@@ -3,8 +3,6 @@ items:
 - apiVersion: build.openshift.io/v1
   kind: BuildConfig
   metadata:
-    annotations:
-      openshift.io/generated-by: OpenShiftNewBuild
     creationTimestamp: null
     labels:
       build: jenkins-slave-go
@@ -20,8 +18,9 @@ items:
     postCommit: {}
     resources: {}
     source:
+      contextDir: jenkins-slave/go
       git:
-        uri: https://github.com/containers-ai/jenkins-slave-go.git
+        uri: https://github.com/containers-ai/tools
       type: Git
     strategy:
       dockerStrategy:
