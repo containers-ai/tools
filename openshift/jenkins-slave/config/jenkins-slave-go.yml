@@ -14,26 +14,26 @@ items:
         kind: DockerImage
         name: containershub/jenkins-slave-go:latest
       pushSecret:
-        name: dockerhub        
+        name: dockerhub
     postCommit: {}
     resources: {}
     source:
-      contextDir: jenkins-slave/go
+      contextDir: openshift/jenkins-slave/go
       git:
-        uri: https://github.com/containers-ai/tools
+        uri: https://github.com/containers-ai/tools.git
       type: Git
     strategy:
       dockerStrategy:
         from:
           kind: DockerImage
-          name: openshift/jenkins-slave-base-centos7
+          name: openshift/jenkins-slave-base-centos7:latest
       type: Docker
     triggers:
     - github:
-        secret: 0W27OREd22qX9kjoDcc8
+        secret: nXUZQFVIluXcUqAPno5E
       type: GitHub
     - generic:
-        secret: 5AdqgF_WXZHukYXPcn-P
+        secret: r3i8yYQBWD4CrCV75bQQ
       type: Generic
     - type: ConfigChange
     - imageChange: {}
