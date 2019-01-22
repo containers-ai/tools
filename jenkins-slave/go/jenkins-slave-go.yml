@@ -1,0 +1,45 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewBuild
+    creationTimestamp: null
+    labels:
+      build: jenkins-slave-go
+    name: jenkins-slave-go
+  spec:
+    nodeSelector: null
+    output:
+      to:
+        kind: DockerImage
+        name: containershub/jenkins-slave-go:latest
+      pushSecret:
+        name: dockerhub        
+    postCommit: {}
+    resources: {}
+    source:
+      git:
+        uri: https://github.com/containers-ai/jenkins-slave-go.git
+      type: Git
+    strategy:
+      dockerStrategy:
+        from:
+          kind: DockerImage
+          name: openshift/jenkins-slave-base-centos7
+      type: Docker
+    triggers:
+    - github:
+        secret: 0W27OREd22qX9kjoDcc8
+      type: GitHub
+    - generic:
+        secret: 5AdqgF_WXZHukYXPcn-P
+      type: Generic
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+  status:
+    lastVersion: 0
+kind: List
+metadata: {}
