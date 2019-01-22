@@ -1,0 +1,44 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    creationTimestamp: null
+    labels:
+      build: jenkins-slave-python
+    name: jenkins-slave-python
+  spec:
+    nodeSelector: null
+    output:
+      to:
+        kind: DockerImage
+        name: containershub/jenkins-slave-python:latest
+      pushSecret:
+        name: dockerhub
+    postCommit: {}
+    resources: {}
+    source:
+      contextDir: openshift/jenkins-slave/python
+      git:
+        uri: https://github.com/containers-ai/tools.git
+      type: Git
+    strategy:
+      dockerStrategy:
+        from:
+          kind: DockerImage
+          name: openshift/jenkins-slave-base-centos7:latest
+      type: Docker
+    triggers:
+    - github:
+        secret: nXUZQFVIluXcUqAPno5E
+      type: GitHub
+    - generic:
+        secret: r3i8yYQBWD4CrCV75bQQ
+      type: Generic
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+  status:
+    lastVersion: 0
+kind: List
+metadata: {}

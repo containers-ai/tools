@@ -16,8 +16,8 @@ oc edit sa builder
 
 - EDIT BUILDCONFIG TO PUSH TO YOUR DOCKER REGISTRY
 ```console
-oc new-build https://github.com/containers-ai/tools.git --context-dir=openshift/jenkins-slave/go -o yaml > jenkins-slave-go.yml
-# Edit jenkins-slave-go.yml
+oc new-build https://github.com/containers-ai/tools.git --context-dir=openshift/jenkins-slave/go -o yaml > config/jenkins-slave-go.yml
+# Edit config/jenkins-slave-go.yml
 oc create -f jenkins-slave-go.yml
 ```
 

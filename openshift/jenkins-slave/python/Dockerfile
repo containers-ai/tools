@@ -1,5 +1,5 @@
 # extend the official jenkins slave base image
-FROM openshift/jenkins-slave-base-centos7
+FROM openshift/jenkins-slave-base-centos7:latest
 
 # specify wanted version of python
 ENV PYTHON_VERSION 3.6.7
