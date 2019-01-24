@@ -1,0 +1,19 @@
+s2i for golang
+https://access.redhat.com/containers/?architecture=AMD64&tab=docker-file#/registry.access.redhat.com/devtools/go-toolset-1.10-rhel7/images/1.10.3-15
+
+iconClass:
+https://rawgit.com/openshift/openshift-logos-icon/master/demo.html
+https://docs.okd.io/latest/welcome/index.html -> Search iconClass
+
+golang
+https://github.com/sclorg/golang-container
+
+nodejs
+https://github.com/sclorg/s2i-nodejs-container
+https://github.com/nodeshift/centos7-s2i-nodejs
+
+docker tag [image-id] scan.connect.redhat.com/ospid-7d545383-0d26-4870-92ff-d649b08cbe98/[image-name]:[tag]
+
+
+s2i to red hat registry
+https://okd.federator.ai:8443/console/project/tutorial-cicd/browse/builds/golang-ex?tab=history
