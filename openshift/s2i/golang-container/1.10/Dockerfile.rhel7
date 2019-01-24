@@ -14,6 +14,10 @@ LABEL summary="$SUMMARY" \
 
 # Set the default CMD to print the usage of the language image.
 
-COPY ./s2i/bin/ $STI_SCRIPTS_PATH
+RUN mkdir -p /licenses
+
+COPY ./LICENSE /licenses/
+
+USER 1001
 
 CMD $STI_SCRIPTS_PATH/usage

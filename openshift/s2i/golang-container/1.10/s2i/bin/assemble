@@ -55,10 +55,6 @@ if [[ `go list -f {{.Incomplete}}` == "true" || ! -z "$IMPORT_URL" ]]; then
 
         mv $GOPATH/bin/* /opt/app-root/gobinary
 
-        mkdir -p /licenses
-
-        cp $GOPATH/src/$INSTALL_URL/LICENSE /licenses/
-
         popd
 
         exit
@@ -68,9 +64,6 @@ if [[ `go list -f {{.Incomplete}}` == "true" || ! -z "$IMPORT_URL" ]]; then
     exec /$STI_SCRIPTS_PATH/usage
 
 else
-    mkdir -p /licenses
-
-    cp LICENSE /licenses/
 
     go build -o /opt/app-root/gobinary
 
