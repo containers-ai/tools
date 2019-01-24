@@ -55,6 +55,8 @@ if [[ `go list -f {{.Incomplete}}` == "true" || ! -z "$IMPORT_URL" ]]; then
 
         mv $GOPATH/bin/* /opt/app-root/gobinary
 
+        cp $GOPATH/src/$INSTALL_URL/LICENSE /licenses/
+
         popd
 
         exit
