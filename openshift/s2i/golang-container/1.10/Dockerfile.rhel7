@@ -13,4 +13,7 @@ LABEL summary="$SUMMARY" \
       version="$VERSION"
 
 # Set the default CMD to print the usage of the language image.
+
+COPY ./s2i/bin/ $STI_SCRIPTS_PATH
+
 CMD $STI_SCRIPTS_PATH/usage
