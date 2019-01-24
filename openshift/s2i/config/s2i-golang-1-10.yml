@@ -1,0 +1,39 @@
+apiVersion: v1
+items:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    creationTimestamp: null
+    labels:
+      build: s2i-golang-1-10
+    name: s2i-golang-1-10
+  spec:
+    nodeSelector: null
+    output:
+      to:
+        kind: DockerImage
+        name: containershub/s2i-golang:1.10
+      pushSecret:
+        name: dockerhub
+    postCommit: {}
+    resources: {}
+    source:
+      contextDir: openshift/s2i/golang-container/1.10/
+      git:
+        uri: https://github.com/containers-ai/tools.git
+      type: Git
+    strategy:
+      type: Docker
+      dockerStrategy:
+        dockerfilePath: Dockerfile.rhel7
+    triggers:
+    - generic:
+        secret: r3i8yYQBWD4CrCV75bQQ
+      type: Generic
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+  status:
+    lastVersion: 0
+kind: List
+metadata: {}
