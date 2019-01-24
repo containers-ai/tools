@@ -25,6 +25,4 @@ RUN mkdir -p /licenses
 
 COPY ./LICENSE /licenses/
 
-USER 1001
-
 CMD $STI_SCRIPTS_PATH/usage
