@@ -1,0 +1,88 @@
+#!/bin/bash
+
+set -e
+
+pushd /tmp/src
+
+if [[ `go list -f {{.Incomplete}}` == "true" || ! -z "$IMPORT_URL" ]]; then
+
+    INSTALL_URL=${INSTALL_URL:-$IMPORT_URL}
+
+    if [[ ! -z "$IMPORT_URL" ]]; then
+
+        popd
+
+        echo "Assembling GOPATH"
+
+        export GOPATH=`realpath $HOME/go`
+
+        mkdir -p $GOPATH/src/$IMPORT_URL
+
+        mv /tmp/src/* $GOPATH/src/$IMPORT_URL
+
+        if [[ -d /tmp/artifacts/pkg || -d /tmp/artifacts/go-build ]]; then
+
+            echo "Restoring previous build artifacts"
+
+            mv /tmp/artifacts/pkg $GOPATH
+            GOCACHE=`go env GOCACHE`
+            mkdir -p $GOCACHE
+            mv /tmp/artifacts/go-build $GOCACHE
+
+        fi
+
+        # Resolve dependencies, ignore if vendor present
+
+        if [[ ! -d $GOPATH/src/$INSTALL_URL/vendor && `go list -f {{.Incomplete}} $INSTALL_URL` == "true" ]]; then
+
+            echo "Resolving dependencies"
+
+            pushd $GOPATH/src/$INSTALL_URL
+
+            go get
+
+            popd
+
+        fi
+
+        # lets build
+
+        pushd $GOPATH/src/$INSTALL_URL
+
+        echo "Building"
+
+        go install $INSTALL_URL
+
+        mv $GOPATH/bin/* /opt/app-root/gobinary
+
+        popd
+
+        exit
+
+    fi
+
+    exec /$STI_SCRIPTS_PATH/usage
+
+else
+
+    go build -o /opt/app-root/gobinary
+
+    popd
+
+fi
+
+
+export INSTALL_URL=github.com/containers-ai/alameda/operator/cmd/manager
+export IMPORT_URL=github.com/containers-ai/alameda
+
+rm /usr/libexec/s2i/assemble
+vi /usr/libexec/s2i/assemble
+
+s2i build -e IMPORT_URL='github.com/containers-ai/alameda' -e INSTALL_URL='github.com/containers-ai/alameda/operator/cmd/manager' https://github.com/containers-ai/alameda containershub/s2i-golang-alameda:0.2 test-alameda-operator
+
+mkdir -p /etc/alameda/datahub
+vi /etc/alameda/datahub/datahub.yml
+mkdir -p /etc/alameda/operator
+vi /etc/alameda/operator/operator.yml
+
+docker tag [image-id] scan.connect.redhat.com/ospid-7d545383-0d26-4870-92ff-d649b08cbe98/[image-name]:[tag]

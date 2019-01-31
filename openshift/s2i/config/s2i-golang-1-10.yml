@@ -11,10 +11,13 @@ items:
     nodeSelector: null
     output:
       to:
-        kind: DockerImage
-        name: containershub/s2i-golang:1.10
-      pushSecret:
-        name: dockerhub
+        kind: ImageStreamTag
+        name: 's2i-golang:latest'    
+      # to:
+      #   kind: DockerImage
+      #   name: containershub/s2i-golang:1.10
+      # pushSecret:
+      #   name: dockerhub
     postCommit: {}
     resources: {}
     source:
